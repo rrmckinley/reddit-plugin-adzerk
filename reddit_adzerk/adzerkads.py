@@ -6,7 +6,7 @@ from r2.lib.pages import Ads as BaseAds
 from r2.models.subreddit import DefaultSR
 
 
-class Ads(BaseAds):
+class AdzerkAds(BaseAds):
     def __init__(self):
         BaseAds.__init__(self)
 

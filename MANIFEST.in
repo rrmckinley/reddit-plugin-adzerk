@@ -1,1 +1,2 @@
 recursive-include reddit_adzerk/public *
+recursive-include reddit_adzerk/templates *

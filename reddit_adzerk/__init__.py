@@ -40,7 +40,7 @@ class Adzerk(Plugin):
     def load_controllers(self):
         # replace the standard Ads view with an Adzerk specific one.
         import r2.lib.pages.pages
-        from adzerkads import Ads as AdzerkAds
+        from adzerkads import AdzerkAds
         r2.lib.pages.pages.Ads = AdzerkAds
 
         # replace standard adserver with Adzerk.

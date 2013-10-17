@@ -3,19 +3,57 @@ r.adzerk = {
             ? 'https://az.turbobytes.net'
             : 'http://static.adzerk.net',
 
-    createSponsorshipAdFrame: function() {
-        var iframe = $('<iframe>')
+    spots: [],
+
+    createAds: function(frameNames) {
+        frameNames = _.object(_.compact(frameNames.split(',')), [])
+
+        var omitted = []
+        _.each(this.spots, function(spot) {
+            if (_.has(frameNames, spot.frameName)) {
+                spot.show()
+            } else {
+                omitted.push(spot)
+            }
+        }, this)
+
+        _.invoke(omitted, 'hide')
+    }
+}
+
+r.adzerk.IFrameSpot = function(options) {
+    this.options = options
+    this.frameName = options.frameName
+}
+r.adzerk.IFrameSpot.prototype = {
+    show: function() {
+        var adSrc = r.adzerk.origin + '/r2/ads-load.html' + '#frame_' + this.frameName
+        $('<iframe>')
             .attr({
-                'id': 'ad_sponsorship',
-                'src': r.adzerk.origin + '/reddit/ads-load.html',
+                'id': this.options.frameId,
+                'src': adSrc,
                 'frameBorder': 0,
                 'scrolling': 'no'
             })
-        $('.side .sponsorshipbox')
-            .empty()
-            .append(iframe)
+            .appendTo($(this.options.container).empty())
+    },
+
+    hide: function() {
+        $(this.options.container).empty()
     }
 }
+
+r.adzerk.spots.push(new r.adzerk.IFrameSpot({
+    frameName: 'sponsorship',
+    frameId: 'ad_sponsorship',
+    container: '.side .sponsorshipbox'
+}))
+
+r.adzerk.spots.push(new r.adzerk.IFrameSpot({
+    frameName: 'side_box',
+    frameId: 'ad-frame',
+    container: '.side .ad-side-box'
+}))
 
 $(window).on('message', function(ev) {
     ev = ev.originalEvent
@@ -23,7 +61,7 @@ $(window).on('message', function(ev) {
       return
     }
     msg = ev.data.split(':')
-    if (msg[0] == 'ados.createAdFrame') {
-      r.adzerk.createSponsorshipAdFrame()
+    if (msg[0] == 'ados.createAds') {
+      r.adzerk.createAds(msg[1])
     }
 })
