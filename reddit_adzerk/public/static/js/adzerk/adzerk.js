@@ -8,16 +8,13 @@ r.adzerk = {
     createAds: function(frameNames) {
         frameNames = _.object(_.compact(frameNames.split(',')), [])
 
-        var omitted = []
         _.each(this.spots, function(spot) {
             if (_.has(frameNames, spot.frameName)) {
                 spot.show()
             } else {
-                omitted.push(spot)
+                spot.hide()
             }
         }, this)
-
-        _.invoke(omitted, 'hide')
     }
 }
 
