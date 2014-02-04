@@ -25,18 +25,21 @@ r.adzerk.IFrameSpot = function(options) {
 r.adzerk.IFrameSpot.prototype = {
     show: function() {
         var adSrc = r.adzerk.origin + '/r2/ads-load.html' + '#frame_' + this.frameName
-        $('<iframe>')
-            .attr({
-                'id': this.options.frameId,
-                'src': adSrc,
-                'frameBorder': 0,
-                'scrolling': 'no'
-            })
-            .appendTo($(this.options.container).empty())
+        $(this.options.container)
+            .empty()
+            .append($('<iframe>')
+                .attr({
+                    'id': this.options.frameId,
+                    'src': adSrc,
+                    'frameBorder': 0,
+                    'scrolling': 'no'
+                })
+            )
+            .show()
     },
 
     hide: function() {
-        $(this.options.container).empty()
+        $(this.options.container).empty().hide()
     }
 }
 
