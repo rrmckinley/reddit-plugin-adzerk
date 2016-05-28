@@ -89,7 +89,7 @@ GOAL_TYPE_BY_COST_BASIS = {
 }
 
 FREQUENCY_CAP_DURATION_HOURS = 24
-PRIORITIES_BY_ID = {v:k for k, v in g.az_selfserve_priorities.iteritems()}
+PRIORITIES_BY_ID = {v:k for k, v in getattr(g, 'az_selfserve_priorities', {}).iteritems()}
 
 LOID_CREATED_COOKIE = "loidcreated"
 
